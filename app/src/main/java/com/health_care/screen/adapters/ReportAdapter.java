@@ -5,6 +5,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Adapter;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
@@ -15,6 +16,8 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
 import com.health_care.R;
 import com.health_care.model.Report;
 
@@ -24,10 +27,12 @@ public class ReportAdapter extends RecyclerView.Adapter<ReportHolder> {
 
     List<Report> reports;
     Activity activity;
+    RecyclerView reportsList;
 
-    public ReportAdapter(List<Report> reports, Activity activity) {
+    public ReportAdapter(List<Report> reports, Activity activity, RecyclerView reportsList) {
         this.reports = reports;
         this.activity = activity;
+        this.reportsList = reportsList;
     }
 
     @NonNull
@@ -58,23 +63,29 @@ public class ReportAdapter extends RecyclerView.Adapter<ReportHolder> {
         FirebaseFirestore db = FirebaseFirestore.getInstance();
 
         db.collection("reports")
-                .document(reports.get(position).getId())
                 .get()
-                .addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                     @Override
-                    public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
                         Log.i("TAG", "onComplete: success   ");
-                        task.getResult().getReference()
-                                .delete()
-                                .addOnCompleteListener(new OnCompleteListener<Void>() {
-                                    @Override
-                                    public void onComplete(@NonNull Task<Void> task) {
-                                        Log.i("TAG", "onComplete: success ");
+                        for (QueryDocumentSnapshot document : task.getResult()) {
+                            if (document.get("id").toString().equals(reports.get(position).getId())) {
+                                document.getReference()
+                                    .delete()
+                                        .addOnCompleteListener(new OnCompleteListener<Void>() {
+                                            @Override
+                                            public void onComplete(@NonNull Task<Void> task) {
+                                                Log.i("TAG", "onComplete: success ");
 
-//                                        notifyDataSetChanged();
+                                                notifyItemRemoved(position);
+                                                ReportAdapter.this.notifyItemRemoved(position);
+    //                                        notifyDataSetChanged();
 
-                                    }
-                                });
+                                            }
+                                        });
+                            }
+                        }
+
                     }
                 });
 

@@ -113,6 +113,7 @@ public class PatientAdapter extends RecyclerView.Adapter<PatientHolder> {
                                                 patients.get(position).getId() + " radioButton.getText() "
                                                 + radioButton.getText());
 
+                                        PatientAdapter.this.notifyItemChanged(position);
 //                                        notifyDataSetChanged();
 
                                     }
