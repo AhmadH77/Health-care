@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="20dp"
+    android:background="@color/white">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        />
+
+    <RadioGroup
+        android:id="@+id/radio"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:gravity="center"
+        android:orientation="vertical">
+
+        <RadioButton
+            android:id="@+id/healthy"
+            android:layout_width="wrap_content"
+            android:layout_weight="1"
+            android:layout_height="0dp"
+            android:checked="true"
+            android:textColor="#292929"
+            android:text="Healthy" />
+
+        <RadioButton
+            android:id="@+id/patient"
+            android:layout_width="wrap_content"
+            android:layout_weight="1"
+            android:layout_height="0dp"
+            android:textColor="#292929"
+            android:text="Patient" />
+    </RadioGroup>
+
+</LinearLayout>
