@@ -77,7 +77,7 @@ public class ReportAdapter extends RecyclerView.Adapter<ReportHolder> {
                                             public void onComplete(@NonNull Task<Void> task) {
                                                 Log.i("TAG", "onComplete: success ");
 
-                                                notifyItemRemoved(position);
+                                                reports.remove(position);
                                                 ReportAdapter.this.notifyItemRemoved(position);
     //                                        notifyDataSetChanged();
 

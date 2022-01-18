@@ -12,6 +12,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ScrollView;
@@ -25,6 +26,7 @@ import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.health_care.R;
 import com.health_care.screen.activities.LoginActivity;
+import com.health_care.screen.activities.MainHomePatientsActivity;
 
 
 public class ProfileFragment extends Fragment {
@@ -33,6 +35,12 @@ public class ProfileFragment extends Fragment {
     TextView name, gender, email, account_type, status;
     LinearLayout status_layout,progressBar_layout,log_out;
     ScrollView info_layout;
+    ImageButton open_nav;
+    String source;
+
+    public ProfileFragment(String source){
+        this.source = source;
+    }
 
     //
     private FirebaseAuth mAuth;
@@ -66,8 +74,16 @@ public class ProfileFragment extends Fragment {
 
                 FirebaseAuth.getInstance().signOut();
                 Intent goToLogin = new Intent(getActivity(), LoginActivity.class);
-                getActivity().startActivity(goToLogin);
                 getActivity().finish();
+                getActivity().startActivity(goToLogin);
+
+            }
+        });
+
+        open_nav.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                ((MainHomePatientsActivity) getActivity()).openDrawer();
             }
         });
     }
@@ -117,5 +133,13 @@ public class ProfileFragment extends Fragment {
         progressBar_layout = view.findViewById(R.id.progressBar_layout);
         log_out = view.findViewById(R.id.log_out);
         info_layout = view.findViewById(R.id.info_layout);
+        open_nav = view.findViewById(R.id.open_nav);
+
+        if (source.equals("P")){
+            open_nav.setVisibility(View.VISIBLE);
+        }
+        else{
+            open_nav.setVisibility(View.GONE);
+        }
     }
 }

@@ -22,6 +22,7 @@ import com.google.firebase.FirebaseApp;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.health_care.R;
 
@@ -95,26 +96,54 @@ public class LoginActivity extends AppCompatActivity {
                 .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
-                        progressBar_layout.setVisibility(View.GONE);
-                        login_form.setVisibility(View.VISIBLE);
                         if (task.isSuccessful()) {
                             // Sign in success, update UI with the signed-in user's information
                             Log.d("TAG", "signInWithEmail:success");
                             FirebaseUser user = mAuth.getCurrentUser();
-                            SharedPreferences preferences = getSharedPreferences("user", Context.MODE_PRIVATE);
+                            db.collection("users").document(user.getUid())
+                                    .get()
+                                    .addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+                                        @Override
+                                        public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                                            progressBar_layout.setVisibility(View.GONE);
+                                            login_form.setVisibility(View.VISIBLE);
 
-                            SharedPreferences.Editor editor = preferences.edit();
-                            editor.putBoolean("logged", true);
-                            editor.apply();
+                                            if (task.isSuccessful()) {
+                                                DocumentSnapshot document = task.getResult();
+                                                Log.d("TAG", document.getId() + " => " + document.getData());
+                                                SharedPreferences preferences = getSharedPreferences("user", Context.MODE_PRIVATE);
 
-                            Intent goToMain = new Intent(LoginActivity.this, MainHomeActivity.class);
-                            startActivity(goToMain);
-                            finish();
+                                                SharedPreferences.Editor editor = preferences.edit();
+                                                editor.putBoolean("logged", true);
+                                                editor.putString("accountType", document.get("accountType").toString());
+                                                editor.apply();
+
+                                                Intent goToMain;
+                                                if (document.get("accountType").toString().equals("2"))
+                                                    goToMain = new Intent(LoginActivity.this, MainHomePatientsActivity.class);
+                                                else
+                                                    goToMain = new Intent(LoginActivity.this, MainHomeActivity.class);
+
+                                                startActivity(goToMain);
+                                                finish();
+                                            } else {
+                                                Log.w("TAG", "Error getting documents.", task.getException());
+                                                Toast.makeText(LoginActivity.this, "Authentication failed.",
+                                                        Toast.LENGTH_LONG).show();
+                                            }
+                                        }
+                                    });
+
                         } else {
+                            progressBar_layout.setVisibility(View.GONE);
+                            login_form.setVisibility(View.VISIBLE);
                             // If sign in fails, display a message to the user.
-                            Log.w("TAG", "signInWithEmail:failure", task.getException());
-                            Toast.makeText(LoginActivity.this, "Authentication failed.",
-                                    Toast.LENGTH_SHORT).show();
+                            Log.w("TAG", "signInWithEmail:failure " + task.getException().getMessage());
+                            Toast.makeText(LoginActivity.this, "Authentication failed! "
+                                            + (task.getException().getMessage().contains("invalid")
+                                            ? task.getException().getMessage()
+                                            : ""),
+                                    Toast.LENGTH_LONG).show();
                         }
 
                     }

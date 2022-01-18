@@ -41,8 +41,7 @@ public class PatientAdapter extends RecyclerView.Adapter<PatientHolder> {
     @Override
     public PatientHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.patient_item,  parent, false);
-        LayoutInflater inflater = activity.getLayoutInflater();
-        statusDialogView = LayoutInflater.from(parent.getContext()).inflate(R.layout.change_status_dialog, parent,false);
+
 
         PatientHolder holder = new PatientHolder(view);
 
@@ -52,39 +51,48 @@ public class PatientAdapter extends RecyclerView.Adapter<PatientHolder> {
     @Override
     public void onBindViewHolder(@NonNull PatientHolder holder, int position) {
 
-        holder.patientName.setText(patients.get(position).getName());
-        holder.status.setText(patients.get(position).getStatus());
-        if(patients.get(position).getStatus().equals("Patient"))
+        holder.patientName.setText(patients.get(holder.getAdapterPosition()).getName());
+        holder.status.setText(patients.get(holder.getAdapterPosition()).getStatus());
+        if(patients.get(holder.getAdapterPosition()).getStatus().equals("Patient"))
             holder.status.setTextColor(activity.getResources().getColor(android.R.color.holo_red_dark));
+        else
+            holder.status.setTextColor(activity.getResources().getColor(R.color.teal_500));
+
         holder.changeStatusButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                showDialog(position);
+                showDialog(holder.getAdapterPosition());
             }
         });
     }
 
      void showDialog(int position) {
         //TODO SHOW DEFAULT STATUS
+         LayoutInflater inflater = activity.getLayoutInflater();
+         statusDialogView = inflater.inflate(R.layout.change_status_dialog, null,false);
 
+         AlertDialog dialog = new AlertDialog.Builder(activity,R.style.MyDialogTheme)
+                 .setIcon(R.drawable.ic_healing)
+                 .setTitle("Change Patient's status")
+                 .setView(statusDialogView)
+                 // Specifying a listener allows you to take an action before dismissing the dialog.
+                 // The dialog is automatically dismissed when a dialog button is clicked.
+                 .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+                     public void onClick(DialogInterface dialog, int which) {
+                         // Continue with delete operation
+                         changeStatus(position);
+                         dialog.dismiss();
+                     }
+                 })
 
-
-         new AlertDialog.Builder(activity,R.style.MyDialogTheme)
-                .setIcon(R.drawable.ic_healing)
-                .setTitle("Change Patient's status")
-                .setView(statusDialogView)
-                // Specifying a listener allows you to take an action before dismissing the dialog.
-                // The dialog is automatically dismissed when a dialog button is clicked.
-                .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int which) {
-                        // Continue with delete operation
-                        changeStatus(position);
-                    }
-                })
-
-                // A null listener allows the button to dismiss the dialog and take no further action.
-                .setNegativeButton(android.R.string.no, null)
-                .show();
+                 // A null listener allows the button to dismiss the dialog and take no further action.
+                 .setNegativeButton(android.R.string.no, new DialogInterface.OnClickListener() {
+                     @Override
+                     public void onClick(DialogInterface dialogInterface, int i) {
+                         dialogInterface.dismiss();
+                     }
+                 }).create();
+                dialog.show();
     }
 
     private void changeStatus(int position) {
@@ -113,7 +121,9 @@ public class PatientAdapter extends RecyclerView.Adapter<PatientHolder> {
                                                 patients.get(position).getId() + " radioButton.getText() "
                                                 + radioButton.getText());
 
+                                        patients.get(position).setStatus(radioButton.getText().toString());
                                         PatientAdapter.this.notifyItemChanged(position);
+
 //                                        notifyDataSetChanged();
 
                                     }

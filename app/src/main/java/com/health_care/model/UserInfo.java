@@ -2,10 +2,10 @@ package com.health_care.model;
 
 public class UserInfo {
 
-    String id, name, email, gender, password,status;
+    String id, name, email, gender, password,status,distance;
     int accountType;// 1medical Stuff // 2- pa
 
-    public UserInfo(String id, String name, String email, String gender, String password, int accountType, String status){
+    public UserInfo(String id, String name, String email, String gender, String password, int accountType, String status,String distance){
         this.id = id;
         this.name = name;
         this.email = email;
@@ -13,6 +13,7 @@ public class UserInfo {
         this.password = password;
         this.accountType = accountType;
         this.status = status;
+        this.distance = distance;
     }
 
     public void setId(String id) {
@@ -69,5 +70,13 @@ public class UserInfo {
 
     public String getStatus() {
         return status;
+    }
+
+    public void setDistance(String distance) {
+        this.distance = distance;
+    }
+
+    public String getDistance() {
+        return distance;
     }
 }

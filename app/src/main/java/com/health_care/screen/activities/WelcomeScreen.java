@@ -31,7 +31,11 @@ import com.google.android.gms.location.LocationSettingsResponse;
 import com.google.android.gms.location.LocationSettingsStatusCodes;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.FirebaseFirestore;
 import com.health_care.R;
+
+import java.util.HashMap;
 
 public class WelcomeScreen extends AppCompatActivity {
 
@@ -48,7 +52,7 @@ public class WelcomeScreen extends AppCompatActivity {
         setContentView(R.layout.activity_welcome_screen);
         //TODO CHANGE IMAGE
 
-         preferences = getPreferences(Context.MODE_PRIVATE);
+         preferences = getSharedPreferences("location",Context.MODE_PRIVATE);
          preferences1 = getSharedPreferences("user" ,Context.MODE_PRIVATE);
         Log.i(TAG, "onLocationResult: test  " + preferences1.getBoolean("logged",false));
 
@@ -58,7 +62,7 @@ public class WelcomeScreen extends AppCompatActivity {
         locationRequest.setFastestInterval(2000);
 
         getCurrentLocation();
-//        Intent intent = new Intent(WelcomeScreen.this , RegisterActivity.class);
+//        Intent intent = new Intent(WelcomeScreen.this , MainHomePatientsActivity.class);
 //        startActivity(intent);
 
 
@@ -94,21 +98,41 @@ public class WelcomeScreen extends AppCompatActivity {
 
                                         Log.i(TAG, "onLocationResult: test  " + preferences1.getBoolean("logged",false));
                                         if(preferences1.getBoolean("logged",false)) {
-                                            if(preferences1.getString("accountType", "").equals("Patient")) {
-                                                Intent goToMain = new Intent(WelcomeScreen.this, MainHomeActivity.class);
-                                                startActivity(goToMain);
-                                                finish();
-                                            }
-                                            else{
-                                                Intent goToMain = new Intent(WelcomeScreen.this, MainHomeActivity.class);
-                                                startActivity(goToMain);
-                                                finish();
-                                            }
+
+                                            FirebaseFirestore db = FirebaseFirestore.getInstance();
+                                            db.collection("users")
+                                                    .document(FirebaseAuth.getInstance().getUid())
+                                                    .update("latitude", String.valueOf(latitude),
+                                                            "longitude", String.valueOf(longitude))
+                                                    .addOnCompleteListener(new OnCompleteListener<Void>() {
+                                                        @Override
+                                                        public void onComplete(@NonNull Task<Void> task) {
+
+                                                            if (task.isSuccessful()) {
+                                                                if(preferences1.getString("accountType", "").equals("2")) {
+                                                                    Intent goToMain = new Intent(WelcomeScreen.this, MainHomePatientsActivity.class);//MainHomeActivity
+                                                                    startActivity(goToMain);
+                                                                    finish();
+                                                                }
+                                                                else{
+                                                                    Intent goToMain = new Intent(WelcomeScreen.this, MainHomeActivity.class);//MainHomeActivity
+                                                                    startActivity(goToMain);
+                                                                    finish();
+                                                                }
+                                                            }
+                                                            else{
+                                                                Log.i(TAG, "onComplete: failed  ");
+                                                                Toast.makeText(WelcomeScreen.this, "Failed" , Toast.LENGTH_LONG).show();
+                                                            }
+                                                        }
+                                                    });
+
 
                                         }
                                         else{
                                             Intent intent = new Intent(WelcomeScreen.this, LoginActivity.class);
                                             startActivity(intent);
+                                            finish();
                                         }
                                         Log.i(TAG, "onLocationResult: latitude  " + latitude + " longitude  " + longitude);
 
@@ -118,7 +142,8 @@ public class WelcomeScreen extends AppCompatActivity {
                                 }
                             }, Looper.getMainLooper());
 
-                } else {
+                }
+                else {
                     turnOnGPS();
                 }
 

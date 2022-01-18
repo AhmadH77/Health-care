@@ -66,7 +66,7 @@ public class PatientsFragment extends Fragment {
                                     patients.add(new UserInfo(document.getId() ,document.get("name").toString(),
                                             document.get("email").toString(), document.get("gender").toString(),
                                             document.get("password").toString(), Integer.parseInt(document.get("accountType").toString()),
-                                            document.get("status").toString() ));
+                                            document.get("status").toString() ,"0"));
                                     Log.d("TAG", document.getId() + " user user=> " + document.getData() + "    "  );
 
                                 }

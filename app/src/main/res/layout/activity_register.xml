@@ -92,6 +92,7 @@
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                 app:hintTextColor="#292929"
                 android:textColorHint="#292929"
+                app:passwordToggleEnabled="true"
                 android:hint="Password">
 
                 <com.google.android.material.textfield.TextInputEditText

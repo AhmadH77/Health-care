@@ -33,7 +33,7 @@ public class MainHomeActivity extends AppCompatActivity implements BottomNavigat
 
         PatientsFragment patientsFragment = new PatientsFragment();
         ReportsFragment reportsFragment = new ReportsFragment();
-        ProfileFragment profileFragment = new ProfileFragment();
+        ProfileFragment profileFragment = new ProfileFragment("MS");
 
         switch (item.getItemId()) {
             case R.id.patients:

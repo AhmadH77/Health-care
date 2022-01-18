@@ -13,18 +13,33 @@
         <entry key="..\:/AndroidProjects/Health_care/app/src/main/res/layout-v28/patient_item.xml" value="0.1" />
         <entry key="..\:/AndroidProjects/Health_care/app/src/main/res/layout/activity_login.xml" value="0.33" />
         <entry key="..\:/AndroidProjects/Health_care/app/src/main/res/layout/activity_main_home.xml" value="0.17028985507246377" />
+        <entry key="..\:/AndroidProjects/Health_care/app/src/main/res/layout/activity_main_home_patients.xml" value="0.22698320787492762" />
+        <entry key="..\:/AndroidProjects/Health_care/app/src/main/res/layout/activity_patients_main.xml" value="0.10869565217391304" />
         <entry key="..\:/AndroidProjects/Health_care/app/src/main/res/layout/activity_profile.xml" value="0.43797856049004597" />
-        <entry key="..\:/AndroidProjects/Health_care/app/src/main/res/layout/activity_register.xml" value="0.601526717557252" />
+        <entry key="..\:/AndroidProjects/Health_care/app/src/main/res/layout/activity_register.xml" value="0.48639455782312924" />
         <entry key="..\:/AndroidProjects/Health_care/app/src/main/res/layout/activity_send_report.xml" value="0.129981884057971" />
         <entry key="..\:/AndroidProjects/Health_care/app/src/main/res/layout/activity_welcome_screen.xml" value="0.22" />
+        <entry key="..\:/AndroidProjects/Health_care/app/src/main/res/layout/app_bar_main.xml" value="0.5" />
         <entry key="..\:/AndroidProjects/Health_care/app/src/main/res/layout/change_status_dialog.xml" value="0.2726423902894491" />
         <entry key="..\:/AndroidProjects/Health_care/app/src/main/res/layout/content_patients_main.xml" value="0.1" />
+        <entry key="..\:/AndroidProjects/Health_care/app/src/main/res/layout/fragment_gallery.xml" value="0.10869565217391304" />
+        <entry key="..\:/AndroidProjects/Health_care/app/src/main/res/layout/fragment_home.xml" value="0.10869565217391304" />
+        <entry key="..\:/AndroidProjects/Health_care/app/src/main/res/layout/fragment_near_by.xml" value="0.25" />
         <entry key="..\:/AndroidProjects/Health_care/app/src/main/res/layout/fragment_patients.xml" value="0.22" />
         <entry key="..\:/AndroidProjects/Health_care/app/src/main/res/layout/fragment_profile.xml" value="0.16" />
         <entry key="..\:/AndroidProjects/Health_care/app/src/main/res/layout/fragment_reports.xml" value="0.20416666666666666" />
+        <entry key="..\:/AndroidProjects/Health_care/app/src/main/res/layout/fragment_send_report.xml" value="0.18" />
+        <entry key="..\:/AndroidProjects/Health_care/app/src/main/res/layout/fragment_slideshow.xml" value="0.10869565217391304" />
+        <entry key="..\:/AndroidProjects/Health_care/app/src/main/res/layout/nav_header_main.xml" value="0.1" />
+        <entry key="..\:/AndroidProjects/Health_care/app/src/main/res/layout/nav_header_patients_main.xml" value="0.10869565217391304" />
+        <entry key="..\:/AndroidProjects/Health_care/app/src/main/res/layout/nearby_patient_item.xml" value="0.33" />
         <entry key="..\:/AndroidProjects/Health_care/app/src/main/res/layout/patient_item.xml" value="0.33" />
         <entry key="..\:/AndroidProjects/Health_care/app/src/main/res/layout/report_item.xml" value="0.33" />
+        <entry key="..\:/AndroidProjects/Health_care/app/src/main/res/menu/activity_main_drawer.xml" value="0.20416666666666666" />
         <entry key="..\:/AndroidProjects/Health_care/app/src/main/res/menu/bottom_nav_menu.xml" value="0.20416666666666666" />
+        <entry key="..\:/AndroidProjects/Health_care/app/src/main/res/menu/drawer_menu.xml" value="0.20102564102564102" />
+        <entry key="..\:/AndroidProjects/Health_care/app/src/main/res/menu/main_patients_home.xml" value="0.20416666666666666" />
+        <entry key="..\:/AndroidProjects/Health_care/app/src/main/res/menu/patients_main.xml" value="0.20416666666666666" />
       </map>
     </option>
   </component>

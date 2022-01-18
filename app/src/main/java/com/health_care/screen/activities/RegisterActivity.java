@@ -162,10 +162,10 @@ public class RegisterActivity extends AppCompatActivity {
                                             if (task.isSuccessful()){
                                                 SharedPreferences.Editor editor = preferences.edit();
                                                 editor.putBoolean("logged", true);
-                                                editor.putString("accountType", accountType.getText().toString());
+                                                editor.putString("accountType", accountType.getText().toString().equals("Patient") ? "2" : "1");
                                                 editor.apply();
                                                 if(accountType.getText().toString().equals("Patient")) {
-                                                    Intent goToMain = new Intent(RegisterActivity.this, MainHomeActivity.class);
+                                                    Intent goToMain = new Intent(RegisterActivity.this, MainHomePatientsActivity.class);
                                                     startActivity(goToMain);
                                                     finish();
                                                 }

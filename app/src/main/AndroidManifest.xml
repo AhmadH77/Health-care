@@ -18,6 +18,13 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.HealthCare" >
         <activity
+            android:name=".screen.activities.MainHomePatientsActivity"
+            android:exported="false"
+            android:label="@string/title_activity_main_patients_home"
+            android:theme="@style/Theme.HealthCare.NoActionBar"
+            />
+<!--        Theme.HealthCare.NoActionBar-->
+        <activity
             android:name=".screen.activities.SendReportActivity"
             android:exported="false" />
         <activity
